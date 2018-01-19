@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="username" value="root"></property>
+		<property name="url" value="jdbc:mysql://localhost/DB_MOVIES"></property>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="password" value="root123"></property>
+	</bean>
+	
+	<bean id="jTemp" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="ds"></property>
+	</bean>	
+	
+	<context:component-scan base-package="com.example.springmvc.daoImpl"></context:component-scan>
+	
+	<bean id="movieBean" class="main.java.daoImpl.MovieDAOImpl">
+		<property name="jdbcTemplate" ref="jTemp"></property>
+	</bean>
+	
+	<bean id="actorBean" class="main.java.daoImpl.ActorDAOImpl">
+		<property name="jdbcTemplate" ref="jTemp"></property>
+	</bean>
+	
+
+</beans>
